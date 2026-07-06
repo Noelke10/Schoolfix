@@ -1,10 +1,10 @@
 import AppLayout from "./layouts/AppLayout";
-import Dashboard from "./pages/Dashboard";
+import ReportIssue from "./pages/ReportIssue";
 
 function App() {
   return (
     <AppLayout>
-      <Dashboard />
+      <ReportIssue />
     </AppLayout>
   );
 }
