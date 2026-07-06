@@ -1,7 +1,8 @@
-export interface Request {
+export interface FacilityRequest {
   id: number;
   title: string;
-  description: string;
-  status: string;
-  priority: string;
+  location: string;
+  reportedBy: string;
+  status: "Awaiting Review" | "Approved" | "In Progress" | "Completed";
+  priority: "Low" | "Medium" | "High" | "Emergency";
 }
