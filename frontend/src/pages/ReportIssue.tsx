@@ -1,37 +1,95 @@
+import { useState } from "react";
+
+type RequestType =
+  | "Something is broken"
+  | "Event setup"
+  | "Cleaning"
+  | "Technology"
+  | "Safety";
+
 function ReportIssue() {
+  const [step, setStep] = useState(1);
+  const [requestType, setRequestType] = useState<RequestType | null>(null);
+  const [location, setLocation] = useState("");
+  const [description, setDescription] = useState("");
+
+  function chooseRequestType(type: RequestType) {
+    setRequestType(type);
+    setStep(2);
+  }
+
+  function submitRequest(event: React.FormEvent) {
+    event.preventDefault();
+    setStep(4);
+  }
+
   return (
-    <main>
-      <h1>How can Facilities help?</h1>
-      <p>Report an issue in under 30 seconds.</p>
+    <main className="min-h-screen bg-slate-100 p-8">
+      {step === 1 && (
+        <section>
+          <h1>How can Facilities help?</h1>
 
-      <form>
-        <div>
-          <label htmlFor="location">Location</label>
-          <input id="location" type="text" placeholder="Classroom 204" />
-        </div>
+          <button onClick={() => chooseRequestType("Something is broken")}>
+            Something is broken
+          </button>
 
-        <div>
-          <label htmlFor="category">Category</label>
-          <select id="category">
-            <option value="">Select a category</option>
-            <option value="maintenance">Maintenance</option>
-            <option value="custodial">Custodial</option>
-            <option value="event">Event Setup</option>
-            <option value="safety">Safety Concern</option>
-            <option value="it">IT / Technology</option>
-          </select>
-        </div>
+          <button onClick={() => chooseRequestType("Event setup")}>
+            Event setup
+          </button>
 
-        <div>
-          <label htmlFor="description">What is the issue?</label>
-          <textarea
-            id="description"
-            placeholder="Projector will not turn on..."
+          <button onClick={() => chooseRequestType("Cleaning")}>
+            Cleaning
+          </button>
+
+          <button onClick={() => chooseRequestType("Technology")}>
+            Technology
+          </button>
+
+          <button onClick={() => chooseRequestType("Safety")}>Safety</button>
+        </section>
+      )}
+
+      {step === 2 && (
+        <section>
+          <h1>Where is it?</h1>
+
+          <input
+            type="text"
+            placeholder="Classroom 204, Parish Hall, Gym..."
+            value={location}
+            onChange={(event) => setLocation(event.target.value)}
           />
-        </div>
 
-        <button type="submit">Submit Request</button>
-      </form>
+          <button onClick={() => setStep(3)}>Continue</button>
+        </section>
+      )}
+
+      {step === 3 && (
+        <section>
+          <h1>Tell us more</h1>
+
+          <form onSubmit={submitRequest}>
+            <textarea
+              placeholder="Briefly describe what you need..."
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+            />
+
+            <button type="submit">Submit Request</button>
+          </form>
+        </section>
+      )}
+
+      {step === 4 && (
+        <section>
+          <h1>Request received</h1>
+          <p>Thanks! Facilities has received your request.</p>
+
+          <p>Type: {requestType}</p>
+          <p>Location: {location}</p>
+          <p>Description: {description}</p>
+        </section>
+      )}
     </main>
   );
 }
