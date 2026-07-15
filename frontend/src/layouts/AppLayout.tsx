@@ -1,16 +1,19 @@
+import type { ReactNode } from "react";
 import Header from "../components/layout/Header";
 import Sidebar from "../components/layout/Sidebar";
 
 type AppLayoutProps = {
-  children: React.ReactNode;
+  children: ReactNode;
+  currentPage: "dashboard" | "reportIssue";
+  onNavigate: (page: "dashboard" | "reportIssue") => void;
 };
 
-function AppLayout({ children }: AppLayoutProps) {
+function AppLayout({ children, currentPage, onNavigate }: AppLayoutProps) {
   return (
-    <div>
-      <Sidebar />
+    <div className="flex min-h-screen bg-slate-100">
+      <Sidebar currentPage={currentPage} onNavigate={onNavigate} />
 
-      <div>
+      <div className="flex-1">
         <Header />
         {children}
       </div>
