@@ -1,4 +1,5 @@
 import { useState } from "react";
+import OptionCard from "../components/requestWizard/OptionCard";
 
 type RequestType =
   | "Something is broken"
@@ -26,26 +27,51 @@ function ReportIssue() {
   return (
     <main className="min-h-screen bg-slate-100 p-8">
       {step === 1 && (
-        <section>
-          <h1>How can Facilities help?</h1>
+        <section className="mx-auto max-w-2xl">
+          <h1 className="text-3xl font-bold text-slate-900">
+            How can Facilities help?
+          </h1>
 
-          <button onClick={() => chooseRequestType("Something is broken")}>
-            Something is broken
-          </button>
+          <p className="mt-2 text-slate-600">
+            Choose the option that best matches your request.
+          </p>
 
-          <button onClick={() => chooseRequestType("Event setup")}>
-            Event setup
-          </button>
+          <div className="mt-6 grid gap-4">
+            <OptionCard
+              icon="🛠️"
+              title="Something is broken"
+              description="Report a maintenance or repair issue"
+              onClick={() => chooseRequestType("Something is broken")}
+            />
 
-          <button onClick={() => chooseRequestType("Cleaning")}>
-            Cleaning
-          </button>
+            <OptionCard
+              icon="🪑"
+              title="Event setup"
+              description="Request tables, chairs, or event support"
+              onClick={() => chooseRequestType("Event setup")}
+            />
 
-          <button onClick={() => chooseRequestType("Technology")}>
-            Technology
-          </button>
+            <OptionCard
+              icon="🧹"
+              title="Cleaning"
+              description="Report spills, trash, or restroom supply needs"
+              onClick={() => chooseRequestType("Cleaning")}
+            />
 
-          <button onClick={() => chooseRequestType("Safety")}>Safety</button>
+            <OptionCard
+              icon="💻"
+              title="Technology"
+              description="Report a projector, device, or technology issue"
+              onClick={() => chooseRequestType("Technology")}
+            />
+
+            <OptionCard
+              icon="⚠️"
+              title="Safety"
+              description="Report a safety or security concern"
+              onClick={() => chooseRequestType("Safety")}
+            />
+          </div>
         </section>
       )}
 
