@@ -1,12 +1,8 @@
 import { useState, type FormEvent } from "react";
-import OptionCard from "../components/requestWizard/OptionCard";
 
-type RequestType =
-  | "Something is broken"
-  | "Event setup"
-  | "Cleaning"
-  | "Technology"
-  | "Safety";
+import RequestTypeStep, {
+  type RequestType,
+} from "../components/requestWizard/RequestTypeStep";
 
 function ReportIssue() {
   const [step, setStep] = useState(1);
@@ -26,54 +22,7 @@ function ReportIssue() {
 
   return (
     <main className="min-h-screen bg-slate-100 p-8">
-      {step === 1 && (
-        <section className="mx-auto max-w-2xl">
-          <h1 className="text-3xl font-bold text-slate-900">
-            How can Facilities help?
-          </h1>
-
-          <p className="mt-2 text-slate-600">
-            Choose the option that best matches your request.
-          </p>
-
-          <div className="mt-6 grid gap-4">
-            <OptionCard
-              icon="🛠️"
-              title="Something is broken"
-              description="Report a maintenance or repair issue"
-              onClick={() => chooseRequestType("Something is broken")}
-            />
-
-            <OptionCard
-              icon="🪑"
-              title="Event setup"
-              description="Request tables, chairs, or event support"
-              onClick={() => chooseRequestType("Event setup")}
-            />
-
-            <OptionCard
-              icon="🧹"
-              title="Cleaning"
-              description="Report spills, trash, or restroom supply needs"
-              onClick={() => chooseRequestType("Cleaning")}
-            />
-
-            <OptionCard
-              icon="💻"
-              title="Technology"
-              description="Report a projector, device, or technology issue"
-              onClick={() => chooseRequestType("Technology")}
-            />
-
-            <OptionCard
-              icon="⚠️"
-              title="Safety"
-              description="Report a safety or security concern"
-              onClick={() => chooseRequestType("Safety")}
-            />
-          </div>
-        </section>
-      )}
+      {step === 1 && <RequestTypeStep onSelect={chooseRequestType} />}
 
       {step === 2 && (
         <section className="mx-auto max-w-2xl rounded-2xl bg-white p-8 shadow-sm">
