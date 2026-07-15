@@ -1,4 +1,5 @@
 import type { FormEvent } from "react";
+import WizardProgress from "./WizardProgress";
 
 type DescriptionStepProps = {
   description: string;
@@ -15,7 +16,7 @@ function DescriptionStep({
 }: DescriptionStepProps) {
   return (
     <section className="mx-auto max-w-2xl rounded-2xl bg-white p-8 shadow-sm">
-      <p className="text-sm font-medium text-blue-700">Step 3 of 3</p>
+      <WizardProgress currentStep={3} totalSteps={3} />
 
       <h1 className="mt-2 text-3xl font-bold text-slate-900">Tell us more</h1>
 

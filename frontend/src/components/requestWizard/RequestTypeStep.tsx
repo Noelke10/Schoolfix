@@ -1,4 +1,12 @@
 import OptionCard from "./OptionCard";
+import WizardProgress from "./WizardProgress";
+import {
+  BrushCleaning,
+  CircleAlert,
+  Hammer,
+  Monitor,
+  PartyPopper,
+} from "lucide-react";
 
 export type RequestType =
   | "Something is broken"
@@ -14,7 +22,7 @@ type RequestTypeStepProps = {
 function RequestTypeStep({ onSelect }: RequestTypeStepProps) {
   return (
     <section className="mx-auto max-w-2xl">
-      <p className="text-sm font-medium text-blue-700">Step 1 of 3</p>
+      <WizardProgress currentStep={1} totalSteps={3} />
 
       <h1 className="mt-2 text-3xl font-bold text-slate-900">
         How can Facilities help?
@@ -26,35 +34,35 @@ function RequestTypeStep({ onSelect }: RequestTypeStepProps) {
 
       <div className="mt-6 grid gap-4">
         <OptionCard
-          icon="🛠️"
+          icon={Hammer}
           title="Something is broken"
           description="Report a maintenance or repair issue"
           onClick={() => onSelect("Something is broken")}
         />
 
         <OptionCard
-          icon="🪑"
+          icon={PartyPopper}
           title="Event setup"
           description="Request tables, chairs, or event support"
           onClick={() => onSelect("Event setup")}
         />
 
         <OptionCard
-          icon="🧹"
+          icon={BrushCleaning}
           title="Cleaning"
           description="Report spills, trash, or restroom supply needs"
           onClick={() => onSelect("Cleaning")}
         />
 
         <OptionCard
-          icon="💻"
+          icon={Monitor}
           title="Technology"
           description="Report a projector, device, or technology issue"
           onClick={() => onSelect("Technology")}
         />
 
         <OptionCard
-          icon="⚠️"
+          icon={CircleAlert}
           title="Safety"
           description="Report a safety or security concern"
           onClick={() => onSelect("Safety")}

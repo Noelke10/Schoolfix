@@ -1,3 +1,5 @@
+import WizardProgress from "./WizardProgress";
+
 type LocationStepProps = {
   location: string;
   onLocationChange: (location: string) => void;
@@ -13,7 +15,7 @@ function LocationStep({
 }: LocationStepProps) {
   return (
     <section className="mx-auto max-w-2xl rounded-2xl bg-white p-8 shadow-sm">
-      <p className="text-sm font-medium text-blue-700">Step 2 of 3</p>
+      <WizardProgress currentStep={2} totalSteps={3} />
 
       <h1 className="mt-2 text-3xl font-bold text-slate-900">Where is it?</h1>
 
