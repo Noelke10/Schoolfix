@@ -4,8 +4,8 @@ import Sidebar from "../components/layout/Sidebar";
 
 type AppLayoutProps = {
   children: ReactNode;
-  currentPage: "dashboard" | "reportIssue";
-  onNavigate: (page: "dashboard" | "reportIssue") => void;
+  currentPage: "dashboard" | "reportIssue" | "myRequests";
+  onNavigate: (page: "dashboard" | "reportIssue" | "myRequests") => void;
 };
 
 function AppLayout({ children, currentPage, onNavigate }: AppLayoutProps) {

@@ -1,6 +1,6 @@
 type SidebarProps = {
-  currentPage: "dashboard" | "reportIssue";
-  onNavigate: (page: "dashboard" | "reportIssue") => void;
+  currentPage: "dashboard" | "reportIssue" | "myRequests";
+  onNavigate: (page: "dashboard" | "reportIssue" | "myRequests") => void;
 };
 
 function Sidebar({ currentPage, onNavigate }: SidebarProps) {
@@ -35,6 +35,16 @@ function Sidebar({ currentPage, onNavigate }: SidebarProps) {
           }`}
         >
           Report an Issue
+        </button>
+
+        <button
+          type="button"
+          onClick={() => onNavigate("myRequests")}
+          className={`${baseButton} ${
+            currentPage === "myRequests" ? activeButton : inactiveButton
+          }`}
+        >
+          My Requests
         </button>
       </nav>
     </aside>
