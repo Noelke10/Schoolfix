@@ -1,3 +1,14 @@
+import { useState } from "react";
+
+type TaskStatus = "Not Started" | "In Progress" | "Completed";
+
+type Assignment = {
+  id: number;
+  title: string;
+  location: string;
+  status: TaskStatus;
+};
+
 const urgentItems = [
   {
     id: 1,
@@ -13,16 +24,18 @@ const urgentItems = [
   },
 ];
 
-const todaysAssignments = [
+const initialAssignments: Assignment[] = [
   {
     id: 1,
     title: "Replace classroom lights",
     location: "Room 204",
+    status: "Not Started",
   },
   {
     id: 2,
     title: "Restock restroom supplies",
     location: "School Hallway Restrooms",
+    status: "In Progress",
   },
 ];
 
@@ -55,6 +68,17 @@ const preventiveMaintenance = [
 ];
 
 function TechnicianDashboard() {
+  const [assignments, setAssignments] =
+    useState<Assignment[]>(initialAssignments);
+
+  function updateTaskStatus(id: number, status: TaskStatus) {
+    setAssignments((currentAssignments) =>
+      currentAssignments.map((assignment) =>
+        assignment.id === id ? { ...assignment, status } : assignment,
+      ),
+    );
+  }
+
   return (
     <main className="p-8">
       <section className="mx-auto max-w-6xl">
@@ -98,57 +122,103 @@ function TechnicianDashboard() {
         </section>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-3">
-          <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm lg:col-span-2">
             <h2 className="text-lg font-semibold text-slate-900">
               Today’s Assignments
             </h2>
 
             <div className="mt-4 space-y-4">
-              {todaysAssignments.map((assignment) => (
-                <div key={assignment.id}>
-                  <p className="font-medium text-slate-900">
-                    {assignment.title}
-                  </p>
-                  <p className="text-sm text-slate-600">
-                    {assignment.location}
-                  </p>
-                </div>
+              {assignments.map((assignment) => (
+                <article
+                  key={assignment.id}
+                  className="rounded-lg border border-slate-200 p-4"
+                >
+                  <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                    <div>
+                      <p className="font-medium text-slate-900">
+                        {assignment.title}
+                      </p>
+
+                      <p className="text-sm text-slate-600">
+                        {assignment.location}
+                      </p>
+
+                      <p className="mt-2 text-sm font-medium text-blue-700">
+                        {assignment.status}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          updateTaskStatus(assignment.id, "Not Started")
+                        }
+                        className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                      >
+                        Not Started
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          updateTaskStatus(assignment.id, "In Progress")
+                        }
+                        className="rounded-lg bg-blue-100 px-3 py-2 text-sm font-medium text-blue-800 hover:bg-blue-200"
+                      >
+                        In Progress
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          updateTaskStatus(assignment.id, "Completed")
+                        }
+                        className="rounded-lg bg-green-100 px-3 py-2 text-sm font-medium text-green-800 hover:bg-green-200"
+                      >
+                        Completed
+                      </button>
+                    </div>
+                  </div>
+                </article>
               ))}
             </div>
           </section>
 
-          <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h2 className="text-lg font-semibold text-slate-900">
-              Event Setups
-            </h2>
+          <div className="space-y-6">
+            <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+              <h2 className="text-lg font-semibold text-slate-900">
+                Event Setups
+              </h2>
 
-            <div className="mt-4 space-y-4">
-              {eventSetups.map((event) => (
-                <div key={event.id}>
-                  <p className="text-sm font-medium text-blue-700">
-                    {event.time}
-                  </p>
-                  <p className="font-medium text-slate-900">{event.title}</p>
-                  <p className="text-sm text-slate-600">{event.location}</p>
-                </div>
-              ))}
-            </div>
-          </section>
+              <div className="mt-4 space-y-4">
+                {eventSetups.map((event) => (
+                  <div key={event.id}>
+                    <p className="text-sm font-medium text-blue-700">
+                      {event.time}
+                    </p>
+                    <p className="font-medium text-slate-900">{event.title}</p>
+                    <p className="text-sm text-slate-600">{event.location}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
 
-          <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h2 className="text-lg font-semibold text-slate-900">
-              Preventive Maintenance
-            </h2>
+            <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+              <h2 className="text-lg font-semibold text-slate-900">
+                Preventive Maintenance
+              </h2>
 
-            <div className="mt-4 space-y-4">
-              {preventiveMaintenance.map((task) => (
-                <div key={task.id}>
-                  <p className="font-medium text-slate-900">{task.title}</p>
-                  <p className="text-sm text-slate-600">{task.due}</p>
-                </div>
-              ))}
-            </div>
-          </section>
+              <div className="mt-4 space-y-4">
+                {preventiveMaintenance.map((task) => (
+                  <div key={task.id}>
+                    <p className="font-medium text-slate-900">{task.title}</p>
+                    <p className="text-sm text-slate-600">{task.due}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
         </div>
       </section>
     </main>
