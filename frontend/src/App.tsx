@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import MyRequests from "./pages/MyRequests";
 import ReportIssue from "./pages/ReportIssue";
 import TechnicianDashboard from "./pages/TechnicianDashboard";
+import RequestDetails from "./pages/RequestDetails";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/report-issue" element={<ReportIssue />} />
           <Route path="/my-requests" element={<MyRequests />} />
           <Route path="/technician" element={<TechnicianDashboard />} />
+          <Route path="/requests/:requestId" element={<RequestDetails />} />
 
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Route>
