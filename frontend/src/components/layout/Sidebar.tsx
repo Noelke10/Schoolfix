@@ -1,63 +1,67 @@
-type SidebarProps = {
-  currentPage: "dashboard" | "reportIssue" | "myRequests" | "technician";
-  onNavigate: (
-    page: "dashboard" | "reportIssue" | "myRequests" | "technician",
-  ) => void;
-};
+import {
+  ClipboardList,
+  LayoutDashboard,
+  PlusCircle,
+  Wrench,
+} from "lucide-react";
+import { NavLink } from "react-router-dom";
 
-function Sidebar({ currentPage, onNavigate }: SidebarProps) {
-  const baseButton =
-    "w-full rounded-lg px-3 py-2 text-left font-medium transition";
+const navigationItems = [
+  {
+    label: "Dashboard",
+    path: "/dashboard",
+    icon: LayoutDashboard,
+  },
+  {
+    label: "Report an Issue",
+    path: "/report-issue",
+    icon: PlusCircle,
+  },
+  {
+    label: "My Requests",
+    path: "/my-requests",
+    icon: ClipboardList,
+  },
+  {
+    label: "Technician Workspace",
+    path: "/technician",
+    icon: Wrench,
+  },
+];
 
-  const activeButton = "bg-blue-100 text-blue-800";
-  const inactiveButton = "text-slate-700 hover:bg-slate-100";
-
+function Sidebar() {
   return (
-    <aside className="min-h-screen w-64 border-r border-slate-200 bg-white p-5">
-      <h2 className="text-2xl font-bold text-blue-800">SchoolFix</h2>
+    <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-slate-200 bg-white md:block">
+      <div className="flex h-20 items-center border-b border-slate-200 px-6">
+        <div>
+          <h1 className="text-xl font-bold text-slate-900">SchoolFix</h1>
 
-      <p className="mt-1 text-sm text-slate-500">Facilities Operations</p>
+          <p className="text-sm text-slate-500">Facilities Operations</p>
+        </div>
+      </div>
 
-      <nav className="mt-8 space-y-2">
-        <button
-          type="button"
-          onClick={() => onNavigate("dashboard")}
-          className={`${baseButton} ${
-            currentPage === "dashboard" ? activeButton : inactiveButton
-          }`}
-        >
-          Dashboard
-        </button>
+      <nav className="space-y-2 p-4">
+        {navigationItems.map((item) => {
+          const Icon = item.icon;
 
-        <button
-          type="button"
-          onClick={() => onNavigate("reportIssue")}
-          className={`${baseButton} ${
-            currentPage === "reportIssue" ? activeButton : inactiveButton
-          }`}
-        >
-          Report an Issue
-        </button>
-
-        <button
-          type="button"
-          onClick={() => onNavigate("myRequests")}
-          className={`${baseButton} ${
-            currentPage === "myRequests" ? activeButton : inactiveButton
-          }`}
-        >
-          My Requests
-        </button>
-
-        <button
-          type="button"
-          onClick={() => onNavigate("technician")}
-          className={`${baseButton} ${
-            currentPage === "technician" ? activeButton : inactiveButton
-          }`}
-        >
-          Technician Workspace
-        </button>
+          return (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) =>
+                [
+                  "flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition",
+                  isActive
+                    ? "bg-blue-50 text-blue-700"
+                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-900",
+                ].join(" ")
+              }
+            >
+              <Icon size={20} />
+              {item.label}
+            </NavLink>
+          );
+        })}
       </nav>
     </aside>
   );

@@ -1,22 +1,27 @@
-import { useState } from "react";
-import AppLayout from "./layouts/AppLayout";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+
+import Layout from "./layouts/Layout";
 import Dashboard from "./pages/Dashboard";
-import ReportIssue from "./pages/ReportIssue";
 import MyRequests from "./pages/MyRequests";
+import ReportIssue from "./pages/ReportIssue";
 import TechnicianDashboard from "./pages/TechnicianDashboard";
 
-type Page = "dashboard" | "reportIssue" | "myRequests" | "technician";
-
 function App() {
-  const [currentPage, setCurrentPage] = useState<Page>("dashboard");
-
   return (
-    <AppLayout currentPage={currentPage} onNavigate={setCurrentPage}>
-      {currentPage === "dashboard" && <Dashboard />}
-      {currentPage === "reportIssue" && <ReportIssue />}
-      {currentPage === "myRequests" && <MyRequests />}
-      {currentPage === "technician" && <TechnicianDashboard />}
-    </AppLayout>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/report-issue" element={<ReportIssue />} />
+          <Route path="/my-requests" element={<MyRequests />} />
+          <Route path="/technician" element={<TechnicianDashboard />} />
+
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
